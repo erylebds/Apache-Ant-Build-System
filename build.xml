@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Apache-Ant-Build-System" default="run" basedir=".">
+
+    <!-- ===== PROPERTIES ===== -->
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="main.class" value="com.algorithms.Main"/>
+
+    <!-- ===== INITIALIZATION ===== -->
+    <target name="init" description="Create build directories">
+        <mkdir dir="${classes.dir}"/>
+    </target>
+
+    <!-- ===== CLEAN ===== -->
+    <target name="clean" description="Delete build directories">
+        <delete dir="${build.dir}"/>
+        <echo message="Cleaned build directory."/>
+    </target>
+
+    <!-- ===== COMPILE ===== -->
+    <target name="compile" depends="init" description="Compile Java source files">
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false"/>
+        <echo message="Compilation successful. Class files are in ${classes.dir}."/>
+    </target>
+
+    <!-- ===== RUN ===== -->
+    <target name="run" depends="compile" description="Run the main class">
+        <java classname="${main.class}" classpath="${classes.dir}" fork="true"/>
+    </target>
+
+    <!-- ===== HELP ===== -->
+    <target name="help">
+        <echo message="Available commands:"/>
+        <echo message="ant clean - Remove build folders"/>
+        <echo message="ant compile - Compile all Java source files"/>
+        <echo message="ant run - Compile and run the project"/>
+    </target>
+
+</project>
