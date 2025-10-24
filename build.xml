@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<project name="Apache-Ant-Build-System" default="help" basedir=".">
+
+    <!-- ========== PROPERTIES ========== -->
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="doc.dir" value="${build.dir}/doc"/>
+    <property name="jar.dir" value="${build.dir}/jar"/>
+    <property name="main.class" value="com.algorithms.Main"/>
+
+    <!-- ========== MISC TASKS ========== -->
+    <target name="init" description="Create required folders">
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${doc.dir}"/>
+        <mkdir dir="${jar.dir}"/>
+    </target>
+
+    <target name="clean" description="Delete build folders">
+        <delete dir="${build.dir}"/>
+        <echo message="Build folders deleted successfully."/>
+    </target>
+
+    <!-- ========== COMPILE TASKS ========== -->
+    <target name="compile" depends="init" description="Compile all Java files">
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false"/>
+        <echo message="All Java source files compiled successfully."/>
+    </target>
+
+    <target name="compile-single" depends="init" description="Compile a single Java file">
+        <echo message="Usage: ant compile-single -Dfile=com/algorithms/MergeTwoSortedLists.java"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false">
+            <include name="${file}"/>
+        </javac>
+        <echo message="File ${file} compiled successfully."/>
+    </target>
+
+    <!-- ========== EXECUTION TASKS ========== -->
+    <target name="run" depends="compile" description="Run the main program">
+        <java classname="${main.class}" classpath="${classes.dir}" fork="true"/>
+    </target>
+
+    <target name="run-single" depends="compile" description="Run a specific Java file with main()">
+        <echo message="Usage: ant run-single -Dclassname=com.algorithms.ValidParenthesis"/>
+        <java classname="${classname}" classpath="${classes.dir}" fork="true"/>
+    </target>
+
+    <!-- ========== JAVADOC TASK ========== -->
+    <target name="javadoc" depends="init" description="Generate documentation">
+        <javadoc sourcepath="${src.dir}" destdir="${doc.dir}" author="true" version="true" use="true"/>
+        <echo message="Documentation created inside ${doc.dir} folder."/>
+    </target>
+
+    <!-- ========== JAR CREATION TASKS ========== -->
+    <target name="jar-classes" depends="compile" description="Create JAR for compiled classes">
+        <jar destfile="${jar.dir}/AlgorithmsProject.jar" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+            </manifest>
+        </jar>
+        <echo message="Created ${jar.dir}/AlgorithmsProject.jar"/>
+    </target>
+
+    <target name="jar-docs" depends="javadoc" description="Create JAR for documentation">
+        <jar destfile="${jar.dir}/AlgorithmsDocs.jar" basedir="${doc.dir}"/>
+        <echo message="Created ${jar.dir}/AlgorithmsDocs.jar"/>
+    </target>
+
+    <!-- ========== HELP TASK ========== -->
+    <target name="help">
+        <echo message="Available Ant tasks:"/>
+        <echo message="ant clean - Delete build folders"/>
+        <echo message="ant init - Create build folders"/>
+        <echo message="ant compile - Compile all Java files"/>
+        <echo message="ant compile-single -Dfile=path/to/File.java"/>
+        <echo message="ant run - Run the main file (com.algorithms.Main)"/>
+        <echo message="ant run-single -Dclassname=package.ClassName"/>
+        <echo message="ant javadoc - Generate documentation"/>
+        <echo message="ant jar-classes - Create JAR file for compiled classes"/>
+        <echo message="ant jar-docs - Create JAR file for documentation"/>
+    </target>
+
+</project>
