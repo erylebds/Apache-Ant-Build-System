@@ -1,5 +1,8 @@
 package com.algorithms;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class RemoveElement {
     public boolean containsDuplicate(int[] nums) {
         Map<Integer, Integer> freq = new HashMap<>();
