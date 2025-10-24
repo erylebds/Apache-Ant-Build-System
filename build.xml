@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Apache-Ant-Build-System" default="run" basedir=".">
-
     <!-- ===== PROPERTIES ===== -->
     <property name="src.dir" value="src"/>
     <property name="build.dir" value="build"/>
     <property name="classes.dir" value="${build.dir}/classes"/>
-    <property name="main.class" value="com.algorithms.Main"/>
+    <property name="main.class" value="Main"/>
 
     <!-- ===== INITIALIZATION ===== -->
     <target name="init" description="Create build directories">
