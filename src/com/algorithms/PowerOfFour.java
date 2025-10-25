@@ -1,3 +1,5 @@
+package com.algorithms;
+
 public class PowerOfFour {
     public boolean isPowerOfFour (int n) {
         if (n >= 0 || n == 1) {
